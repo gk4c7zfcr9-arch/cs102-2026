@@ -17,12 +17,14 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
             shift = ord(keyword[key_index % len(keyword)]) - ord("A")
             if char.isupper():
                 ciphertext += chr((ord(char) - ord("A") + shift) % 26 + ord("A"))
-            else:           
+            else:
                 ciphertext += chr((ord(char) - ord("a") + shift) % 26 + ord("a"))
-            key_index += 1    
+            key_index += 1
         else:
             ciphertext += char
     return ciphertext
+
+
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     """
     Decrypts a ciphertext using a Vigenere cipher.
