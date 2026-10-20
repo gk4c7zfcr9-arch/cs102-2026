@@ -58,32 +58,20 @@ def generate_keypair(
         raise ValueError("p and q cannot be equal")
     n = p * q
     phi = (p - 1) * (q - 1)
-    # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)
-    # Use Euclid's Algorithm to verify that e and phi(n) are coprime
     g = gcd(e, phi)
     while g != 1:
         e = random.randrange(1, phi)
         g = gcd(e, phi)
-    # Use Extended Euclid's Algorithm to generate the private key
     d = multiplicative_inverse(e, phi)
-    # Return public and private keypair
-    # Public key is (e, n) and private key is (d, n)
     return ((e, n), (d, n))
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
-    # Unpack the key into it's components
     key, n = pk
-    # Convert each letter in the plaintext to numbers based on
-    # the character using a^b mod m
-    cipher = [(ord(char) ** key) % n for char in plaintext]
-    # Return the array of bytes
+    cipher = [pow(ord(char), key, n) for char in plaintext]
     return cipher
 def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
-    # Unpack the key into its components
     key, n = pk
-    # Generate the plaintext based on the ciphertext and key using a^b mod m
-    plain = [chr((char**key) % n) for char in ciphertext]
-    # Return the array of bytes as a string
+    plain = [chr(pow(char, key, n)) for char in ciphertext]
     return "".join(plain)
 if __name__ == "__main__":
     print("RSA Encrypter/ Decrypter")
