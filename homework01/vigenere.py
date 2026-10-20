@@ -22,12 +22,8 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
                 ciphertext += chr((ord(char) - ord("a") + shift) % 26 + ord("a"))
         else:
             ciphertext += char
-
-        key_index += 1
-
+    key_index += 1
     return ciphertext
-
-
 def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     """
     Decrypts a ciphertext using a Vigenere cipher.
@@ -41,7 +37,6 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     plaintext = ""
     keyword = keyword.upper()
     key_index = 0
-
     for char in ciphertext:
         if char.isalpha():
             shift = ord(keyword[key_index % len(keyword)]) - ord("A")
@@ -52,7 +47,5 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
                 plaintext += chr((ord(char) - ord("a") - shift) % 26 + ord("a"))
         else:
             plaintext += char
-
         key_index += 1
-
     return plaintext
